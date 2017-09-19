@@ -3,5 +3,5 @@ project(RemotememoryProyectoUno)
 
 set(CMAKE_CXX_STANDARD 11)
 
-set(SOURCE_FILES main.cpp server.h server.cpp Estructura.h)
+set(SOURCE_FILES main.cpp server.h server.cpp Estructura.h Estructura.cpp)
 add_executable(RemotememoryProyectoUno ${SOURCE_FILES} server.h server.cpp)
