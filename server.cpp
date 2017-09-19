@@ -2,6 +2,11 @@
 // Created by maesly on 15/09/17.
 //
 //Se incluyen todas las bibliotecas necesarias para ejecutar el servidor
+
+/**
+ * @file server.cpp
+ *@brief En este archivo se complementa el cuerpo de las funciones declaradas en el header
+ * */
 #include <iostream>
 #include <string.h>
 #include <sys/types.h>
@@ -25,7 +30,7 @@ Servidor::Servidor(sockaddr_in server_addr) : server_addr(server_addr) {
 
 
 /**
-* Detiene el servidor
+* @brief Detiene el servidor cambiando el booleano salir a true
 *
 */
 void Servidor::detener(){
@@ -33,32 +38,34 @@ void Servidor::detener(){
     shutdown(cliente,SHUT_RDWR);
 }
 /**
-* Inicializador
+* @brief Funcion que inicializa el socket cliente y llama la funcion correr()
 */
 void Servidor::iniciar(){
     cliente = socket(AF_INET,SOCK_STREAM,0); // se crea el dominio de socket
     correr();
 }
 /**
-* Deconstructor de la clase
+* @brief Deconstructor de la clase
 */
 Servidor::~Servidor(){ }
 
 /**
-* Metodo principal para escuchar por nuevos clientes
+* @brief Metodo principal para escuchar por nuevos clientes y realizar un chat entre clientes/servidor
 */
 
 void Servidor::correr(){
-    if(cliente<0){
+
+    if(cliente<0){ // verifica que el socket se haya creado correctamente
         cout << "Error estableciendo el socket..." << endl;
-        exit(1);  // se usa para salir del programa si no se puede crear la conexion
+        exit(1);
     }
+
     // Se asigna a la estructura sock_addr un dominio,ip y un puerto
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = htons(INADDR_ANY);
     server_addr.sin_port = htons(port);
 
-    if((bind(cliente,(struct sockaddr*) &server_addr,sizeof(server_addr)))<0){
+    if((bind(cliente,(struct sockaddr*) &server_addr,sizeof(server_addr)))<0){ // se crea la conexion con el puerto y el socket
         cout << "Error enlazando la conexión...\n" << endl;
         exit(-1);
 
@@ -68,10 +75,10 @@ void Servidor::correr(){
     size = sizeof(server_addr);
     listen(cliente,1); // El servidor escucha a los clientes
 
-    while(!salir) { // condicion que mantiene corriendo el servidor
-        servidor = accept(cliente, (struct sockaddr *) &server_addr, &size);   //acepta a los clientes que deseen conectarse
-        strcpy(buffer, "Servidor conectado...\n"); //Se setea el mensaje a enviar al cliente
-        send(servidor, buffer, bufsize, 0);  // envía mensaje de respuesta al cliente cuando este se conecta
+    while(!salir) {                                                             // condicion que mantiene corriendo el servidor
+        servidor = accept(cliente, (struct sockaddr *) &server_addr, &size);    ///Acepta a los clientes que deseen conectarse
+        strcpy(buffer, "Servidor conectado...\n");                              //Se setea el mensaje a enviar al cliente
+        send(servidor, buffer, bufsize, 0);                                     /// Envía mensaje de respuesta al cliente cuando este se conecta
         cout << "Conexion exitosa!" << endl;
         cout << "Poner * al final del mensaje* \nEscriba # para finalizar la conexion..." << endl;
         cout << "Mensaje recibido: \n";
