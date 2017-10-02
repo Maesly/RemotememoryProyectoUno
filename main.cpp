@@ -11,8 +11,14 @@
 #include <unistd.h>
 #include <thread>
 #include <stdio.h>
+#include <gtk/gtk.h>
+
+
 using namespace std;
-int main() {
+
+
+int main(int argc, char *argv[]) {
+
     std::cout << "Hello, World!" << std::endl;
     Servidor* servidor = new Servidor(sockaddr_in());
     servidor->iniciar();

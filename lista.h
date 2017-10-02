@@ -5,11 +5,13 @@
 #ifndef REMOTEMEMORYPROYECTOUNO_LISTA_H
 #define REMOTEMEMORYPROYECTOUNO_LISTA_H
 
+
 #include <iostream>
 #include <stdlib.h>
 using namespace std;
 /**
- * Inicializa el nodo
+ * @brief Inicializa el nodo
+ *
  */
 struct nodo{
     int nro;
@@ -19,7 +21,9 @@ struct nodo{
 typedef struct nodo *Tlista;
 
 /**
- * Inserta valores al inicio de la lista enlazada.
+ * @brief Inserta valores al inicio de la lista enlazada.
+ * @param lista
+ * @param valor
  */
 
 void insertarInicio(Tlista &lista, int valor)
@@ -31,13 +35,11 @@ void insertarInicio(Tlista &lista, int valor)
     lista  = q;
 }
 
-/**
- *
- */
 
 /**
- * Su función es buscar el elemento deseado
- * dentro de una lista.
+ * @brief Su función es buscar el elemento deseado dentro de una lista.
+ * @param lista
+ * @param valor
  */
 void buscarElemento(Tlista lista, int valor)
 {
@@ -59,7 +61,9 @@ void buscarElemento(Tlista lista, int valor)
         cout<<"\n\n Numero no encontrado..!"<< endl;
 }
 /**
- * Imprime la Lista
+ *
+ * @brief Esta funcion se encarga de imprimir los elementos de la lista
+ * @param lista
  */
 void reportarLista(Tlista lista)
 {
@@ -74,7 +78,9 @@ void reportarLista(Tlista lista)
 }
 
 /**
- * Eliminar Elemento
+ * @brief Funcion que se encarga de eliminar un elemento deseado de la lista
+ * @param lista
+ * @param valor
  *
  */
 
@@ -106,8 +112,7 @@ void eliminarElemento(Tlista &lista, int valor)
 }
 
 /**
- *
- * Eliminar Repetidos
+ * @brief Funcion que elimina los elementos repetidos en la lista
  */
 
 void eliminaRepetidos(Tlista &lista, int valor){
@@ -145,7 +150,8 @@ void eliminaRepetidos(Tlista &lista, int valor){
 }
 
 /**
- *
+ *@brief Esta es la funcion main que contiene las opciones de
+ * insertar, eliminar y buscar en la lista.
  * Main
  */
 
@@ -155,10 +161,6 @@ int mainSinglyLinkedList(){
     Tlista lista = NULL;
 
     int n;
-    double t1,t2;
-
-    cout << "\n\t\t LISTA ENLAZADA SIMPLE \n\n";
-
     int dato;
 
     cout << " Numero de elementos de la lista:  ";
@@ -175,15 +177,8 @@ int mainSinglyLinkedList(){
     reportarLista(lista);
     cout<<"\n"<<endl;
 
-
-    /**
-     * t1 y t2 miden el tiempo que tarda el algoritmo
-     * en buscar un elemento
-     * en la lista.
-     */
-
     int opcion = 0;
-    while(opcion !=987){
+    while(opcion !=300){
         cout<<"1.Buscar un Elemento"<<endl;
         cout<<"2.Eliminar Elemento"<<endl;
         cout<<"3.Ingresar Elemento"<<endl;
@@ -196,11 +191,7 @@ int mainSinglyLinkedList(){
 
                 cout << "\n Valor a buscar: ";
                 cin >> dato;
-
-                t1 = clock();
                 buscarElemento(lista, dato);
-                t2 = clock();
-                cout << "\nTiempo Búsqueda: \t: " << ((t2 - t1)/CLOCKS_PER_SEC)*1000<<endl;
                 break;
 
             case 2:
@@ -208,25 +199,19 @@ int mainSinglyLinkedList(){
                 reportarLista(lista);
                 cout << "\n Valor a Eliminar: ";
                 cin >> dato;
-                t1 = clock();
                 eliminarElemento(lista,dato);
-                t2 = clock();
-                cout << "\nTiempo Eliminar: \t: " << ((t2 - t1)/CLOCKS_PER_SEC)*1000<<endl;
                 break;
 
 
             case 3:
                 cout << "\n Valor a Ingresar: ";
                 cin >> dato;
-                t1 = clock();
                 insertarInicio(lista,dato);
-                t2 = clock();
                 reportarLista(lista);
-                cout << "\nTiempo Ingreso: \t: " << ((t2 - t1)/CLOCKS_PER_SEC)*1000<<endl;
-
                 break;
+
             case 4:
-                opcion = 987;
+                opcion = 300;
                 break;
 
             default:

@@ -6,6 +6,7 @@
 /**
  * @file server.cpp
  *@brief En este archivo se complementa el cuerpo de las funciones declaradas en el header
+ *
  * */
 #include <iostream>
 #include <string.h>
@@ -81,33 +82,40 @@ void Servidor::correr(){
         if(servidor>=0){
             char* buffer = (char*) calloc(1,1024);
             while(!salir){
+
                 recv(servidor, buffer, 1024, 0);
                 printf("%s\n",buffer);
+                Tlista* lista = new Tlista;
+
                 if(*buffer == '1'){
-                    Tlista* lista = new Tlista;
+                    mainSinglyLinkedList();
+                    send(cliente,buffer,bufsize,0);
+
                     insertarInicio(reinterpret_cast<Tlista &>(lista), 45);
                     reportarLista(reinterpret_cast<Tlista>(lista));
                     send(servidor,buffer,1024,0);
+                    reportarLista(reinterpret_cast<Tlista>(lista));
+
                 }
                 else if(*buffer == '2') {
-                    cout << "hla";
+                    buscarElemento(reinterpret_cast<Tlista>(lista), *buffer);
+                    reportarLista(reinterpret_cast<Tlista>(lista));
+
+                    send(servidor,buffer,1024,0);
                 }else if(*buffer == '3'){
-                        cout <<"#jojo";
-                }else{
+                    eliminarElemento(reinterpret_cast<Tlista &>(lista), *buffer);
+                    reportarLista(reinterpret_cast<Tlista>(lista));
+                    send(servidor,buffer,1024,0);
+                }else if (*buffer == 'salir'){
+                    salir = true;
+                }
+                else{
                     close(cliente);
                 }
-
-
-                //exit(0);
             }
             close(cliente);
         }else {
             close(cliente);
-            //break;
-            //cout << "Error aceptando el cliente" << endl;
-            //exit(1);
-
-
         }
     }
 }
