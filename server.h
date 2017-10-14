@@ -16,7 +16,7 @@ class Servidor{
 private:
 
     int cliente,servidor;               // Sockets
-    const int port = 3030;              // Puerto por el que se va a comunicar
+    const int port = 6060;              // Puerto por el que se va a comunicar
     int bufsize = 1024;                 // tamaño de los char que se van a enviar y recibir
     char* buffer = new char(bufsize);   // buffer son los char que se van a enviar y recibir
     bool salir;                         // booleano que se utiliza en el while como condicion

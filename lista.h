@@ -28,11 +28,10 @@ typedef struct nodo *Tlista;
 
 void insertar(Tlista &lista, int valor)
 {
-    Tlista q;
-    q = new(struct nodo);
-    q->numero = valor;
-    q->siguiente = lista;
-    lista  = q;
+    Tlista nuevoNodo = new(struct nodo);
+    nuevoNodo->numero = valor;
+    nuevoNodo->siguiente = lista;
+    lista  = nuevoNodo;
 }
 
 /**
@@ -50,6 +49,29 @@ void ImprimirLista(Tlista lista)
         lista = lista->siguiente;
         i++;
     }
+}
+/**
+ * @brief Funcion que se encarga de buscar elementos en la lista
+ * @param lista
+ *
+ * */
+void buscarElemento(Tlista lista, int valor){
+    Tlista temp = lista;
+    int i = 0,band =0;
+    if(lista != NULL){
+        while(temp != NULL){
+            if(temp->numero == valor){
+                cout<<endl<<" Encontrada en posicion "<< i <<endl;
+                band = 1;
+            }
+            temp = temp->siguiente;
+            i++;
+        }
+
+        if(band==0)
+            cout<<"\n\n Numero no encontrado..!"<< endl;
+    }
+
 }
 
 /**
@@ -100,7 +122,8 @@ int mainSinglyLinkedList(){
         cout<<"1.Ingresar un Elemento"<<endl;
         cout<<"2.Eliminar Elemento"<<endl;
         cout<<"3.Mostrar lista"<< endl;
-        cout<<"4.Salir"<<endl;
+        cout<<"4.Buscar elemento"<<endl;
+        cout<<"5.Salir"<<endl;
         cin>>opcion;
 
         switch (opcion){
@@ -115,11 +138,16 @@ int mainSinglyLinkedList(){
                 eliminarElemento(lista,dato);
                 break;
             case 3:
+                cout << "\n Buscar elemento en la lista ";
+                cin >> dato;
+                buscarElemento(lista,dato);
+                break;
+            case 4:
                 cout << "\n Mostrando la lista ";
                 cin >> dato;
                 ImprimirLista(lista);
                 break;
-            case 4:
+            case 5:
                 opcion = 300;
                 break;
 

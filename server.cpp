@@ -79,26 +79,28 @@ void Servidor::correr(){
 
     while(!salir) {                                                             // condicion que mantiene corriendo el servidor
         servidor = accept(cliente,(struct sockaddr*) &server_addr,&size);       // Acepta el cliente
+        cout << "\nServidor conectado\n";
         if(servidor>=0){
             char* buffer = (char*) calloc(1,1024);
             char* envia = (char*) calloc(1,1024);
 
             recv(servidor, buffer, 1024, 0);
-            strcpy(envia, "El mensaje fue recibido");
+            strcpy(envia, "El mensaje fue recibido\n");
             send(servidor,envia,1024,0);
+            Tlista* lista = NULL ;//= new Tlista;
 
             while(*buffer != 'l'){
                 recv(servidor, buffer, 1024, 0);
-                strcpy(envia, "El mensaje fue recibido");
+                strcpy(envia, "El mensaje fue recibido\n");
                 send(servidor,envia,1024,0);
 
                 printf("%s\n",buffer);
-                Tlista* lista = NULL ;//= new Tlista;
+
                 //lista = NULL;
                 //mainSinglyLinkedList();
 
                 if(*buffer == '1') {
-                    send(cliente, buffer, bufsize, 0);
+                    send(cliente, envia, bufsize, 0);
                     recv(servidor, buffer, 1024, 0);
 
                     int valor = atoi(buffer);
