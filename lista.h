@@ -14,8 +14,8 @@ using namespace std;
  *
  */
 struct nodo{
-    int nro;
-    struct nodo *sgte;
+    int numero;
+    struct nodo *siguiente;
 };
 
 typedef struct nodo *Tlista;
@@ -26,53 +26,28 @@ typedef struct nodo *Tlista;
  * @param valor
  */
 
-void insertarInicio(Tlista &lista, int valor)
+void insertar(Tlista &lista, int valor)
 {
     Tlista q;
     q = new(struct nodo);
-    q->nro = valor;
-    q->sgte = lista;
+    q->numero = valor;
+    q->siguiente = lista;
     lista  = q;
 }
 
-
-/**
- * @brief Su función es buscar el elemento deseado dentro de una lista.
- * @param lista
- * @param valor
- */
-void buscarElemento(Tlista lista, int valor)
-{
-    Tlista q = lista;
-    int i = 1, band = 0;
-
-    while(q!=NULL)
-    {
-        if(q->nro==valor)
-        {
-            cout<<endl<<" Encontrada en posicion "<< i <<endl;
-            band = 1;
-        }
-        q = q->sgte;
-        i++;
-    }
-
-    if(band==0)
-        cout<<"\n\n Numero no encontrado..!"<< endl;
-}
 /**
  *
  * @brief Esta funcion se encarga de imprimir los elementos de la lista
  * @param lista
  */
-void reportarLista(Tlista lista)
+void ImprimirLista(Tlista lista)
 {
     int i = 0;
 
     while(lista != NULL)
     {
-        cout <<' '<< i+1 <<") " << lista->nro << endl;
-        lista = lista->sgte;
+        cout <<' '<< i+1 <<") " << lista->numero << endl;
+        lista = lista->siguiente;
         i++;
     }
 }
@@ -93,60 +68,22 @@ void eliminarElemento(Tlista &lista, int valor)
     {
         while(p!=NULL)
         {
-            if(p->nro==valor)
+            if(p->numero==valor)
             {
                 if(p==lista)
-                    lista = lista->sgte;
+                    lista = lista->siguiente;
                 else
-                    ant->sgte = p->sgte;
+                    ant->siguiente = p->siguiente;
 
                 delete(p);
                 return;
             }
             ant = p;
-            p = p->sgte;
+            p = p->siguiente;
         }
     }
     else
         cout<<" Lista vacia..!";
-}
-
-/**
- * @brief Funcion que elimina los elementos repetidos en la lista
- */
-
-void eliminaRepetidos(Tlista &lista, int valor){
-
-    Tlista q, ant;
-    q = lista;
-    ant = lista;
-
-    while(q!=NULL)
-    {
-        if(q->nro==valor)
-        {
-            if(q==lista) // primero elemento
-            {
-                lista = lista->sgte;
-                delete(q);
-                q = lista;
-            }
-            else
-            {
-                ant->sgte = q->sgte;
-                delete(q);
-                q = ant->sgte;
-            }
-        }
-        else
-        {
-            ant = q;
-            q = q->sgte;
-        }
-
-    }// fin del while
-
-    cout<<"\n\n Valores eliminados..!"<<endl;
 }
 
 /**
@@ -156,60 +93,32 @@ void eliminaRepetidos(Tlista &lista, int valor){
  */
 
 int mainSinglyLinkedList(){
-
-
-    Tlista lista = NULL;
-
-    int n;
     int dato;
-
-    cout << " Numero de elementos de la lista:  ";
-    cin >> n;
-    cout << endl;
-
-    srand(time(NULL));
-
-    for (int i = 0; i < n; i++) {
-        int x = rand() % 10000;
-        insertarInicio(lista, x);
-    }
-    cout << "\n\n MOSTRANDO LISTA\n\n";
-    reportarLista(lista);
-    cout<<"\n"<<endl;
-
+    Tlista lista = NULL;
     int opcion = 0;
     while(opcion !=300){
-        cout<<"1.Buscar un Elemento"<<endl;
+        cout<<"1.Ingresar un Elemento"<<endl;
         cout<<"2.Eliminar Elemento"<<endl;
-        cout<<"3.Ingresar Elemento"<<endl;
+        cout<<"3.Mostrar lista"<< endl;
         cout<<"4.Salir"<<endl;
         cin>>opcion;
 
         switch (opcion){
-
             case 1:
-
-                cout << "\n Valor a buscar: ";
+                cout << "\n Elemento que desea insertar: ";
                 cin >> dato;
-                buscarElemento(lista, dato);
+                insertar(lista,dato);
                 break;
-
             case 2:
-                cout<<"\n Mostrando Lista"<<endl;
-                reportarLista(lista);
-                cout << "\n Valor a Eliminar: ";
+                cout<<"\n Elemento que desea eliminar:"<<endl;
                 cin >> dato;
                 eliminarElemento(lista,dato);
                 break;
-
-
             case 3:
-                cout << "\n Valor a Ingresar: ";
+                cout << "\n Mostrando la lista ";
                 cin >> dato;
-                insertarInicio(lista,dato);
-                reportarLista(lista);
+                ImprimirLista(lista);
                 break;
-
             case 4:
                 opcion = 300;
                 break;

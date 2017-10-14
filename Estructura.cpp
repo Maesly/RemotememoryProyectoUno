@@ -27,7 +27,7 @@ int Memoria::mainEstructura(){
     std:: cout << "El valor es: "<< nuevo->valor<<std::endl;
     nuevo = new Memoria(x, 10);
     nuevo->valor = 45;
-
+    Memoria();
     std:: cout << "La llave es: "<< nuevo->llave<< std::endl;
     std:: cout << "El valor es: "<< nuevo->valor;
     return 0;

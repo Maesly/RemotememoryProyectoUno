@@ -23,4 +23,7 @@ int main(int argc, char *argv[]) {
     Servidor* servidor = new Servidor(sockaddr_in());
     servidor->iniciar();
     //Memoria::mainEstructura();
+
+    //Memoria* mem = new Memoria;
+    //mem->mainEstructura();
 }

@@ -78,44 +78,37 @@ void Servidor::correr(){
     listen(cliente,1); // El servidor escucha a los clientes
 
     while(!salir) {                                                             // condicion que mantiene corriendo el servidor
-        servidor = accept(cliente,(struct sockaddr*) &server_addr,&size);
+        servidor = accept(cliente,(struct sockaddr*) &server_addr,&size);       // Acepta el cliente
         if(servidor>=0){
             char* buffer = (char*) calloc(1,1024);
-            while(!salir){
+            char* envia = (char*) calloc(1,1024);
 
+            recv(servidor, buffer, 1024, 0);
+            strcpy(envia, "El mensaje fue recibido");
+            send(servidor,envia,1024,0);
+
+            while(*buffer != 'l'){
                 recv(servidor, buffer, 1024, 0);
+                strcpy(envia, "El mensaje fue recibido");
+                send(servidor,envia,1024,0);
+
                 printf("%s\n",buffer);
-                Tlista* lista = new Tlista;
+                Tlista* lista = NULL ;//= new Tlista;
+                //lista = NULL;
+                //mainSinglyLinkedList();
 
-                if(*buffer == '1'){
-                    mainSinglyLinkedList();
-                    send(cliente,buffer,bufsize,0);
+                if(*buffer == '1') {
+                    send(cliente, buffer, bufsize, 0);
+                    recv(servidor, buffer, 1024, 0);
 
-                    insertarInicio(reinterpret_cast<Tlista &>(lista), 45);
-                    reportarLista(reinterpret_cast<Tlista>(lista));
-                    send(servidor,buffer,1024,0);
-                    reportarLista(reinterpret_cast<Tlista>(lista));
-
-                }
-                else if(*buffer == '2') {
-                    buscarElemento(reinterpret_cast<Tlista>(lista), *buffer);
-                    reportarLista(reinterpret_cast<Tlista>(lista));
-
-                    send(servidor,buffer,1024,0);
-                }else if(*buffer == '3'){
-                    eliminarElemento(reinterpret_cast<Tlista &>(lista), *buffer);
-                    reportarLista(reinterpret_cast<Tlista>(lista));
-                    send(servidor,buffer,1024,0);
-                }else if (*buffer == 'salir'){
-                    salir = true;
-                }
-                else{
-                    close(cliente);
+                    int valor = atoi(buffer);
+                    insertar(reinterpret_cast<Tlista &>(lista), valor);
+                    ImprimirLista(reinterpret_cast<Tlista>(lista));
+                    send(servidor, buffer, 1024, 0);
                 }
             }
-            close(cliente);
-        }else {
-            close(cliente);
+            cout<< "Conexion terminada. Programa finalizado\n\n";
+            close(servidor);
         }
     }
 }
